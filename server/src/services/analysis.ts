@@ -1,18 +1,78 @@
+import responseDTO from "../DTO/response";
 import event from "../models/event";
 
-
-
-export const deadliestAttackTypesService = async () => {
+//תיאור: מחזיר סוגי התקפות מדורגים לפי מספר הנפגעים הכולל.
+export const deadliestAttackTypesService = async (): Promise<responseDTO> => {
   try {
     // מחזיר סוגי התקפות מדורגים לפי מספר הנפגעים הכולל גם הרוגים וגם פצועים.
     const deadliestAttack = await event.aggregate([
-      { $group: { _id: "$attacktype1_txt", count: { $sum: [ "$nkill", "$nwound" ]} } },
+      {
+        $group: {
+          _id: "$attacktype1_txt",
+          count: { $sum: { $add: ["$nkill", "$nwound"] } },
+        },
+      },
       { $sort: { count: -1 } },
     ]);
-    return deadliestAttack;
-    
+    return {
+      description:
+        "מחזיר סוגי התקפות מדורגים לפי מספר הנפגעים הכולל גם הרוגים וגם פצועים.",
+      data: deadliestAttack,
+    };
   } catch (err: any) {
     console.log("Error in deadliestAttackTypesService : ", err.message);
+    return err.message;
+  }
+};
+
+export const getLocationInRegion = async (region: string) => {
+  try {
+    const getLocation = await event.findOne({ region_txt: region });
+    if(!getLocation) throw new Error("cont get location by region!");
+    // console.log({ lon: getLocation.longitude, lat: getLocation.latitude });
+    return { lon: getLocation.longitude, lat: getLocation.latitude };
+  } catch (error: any) {
+    return error.message;
+  }
+};
+
+export const highestCasualtyRegionsService = async (
+  region?: string
+): Promise<responseDTO> => {
+  try {
+    await getLocationInRegion("Western Europe");
+    let avgCasualty;
+    if (region) {
+      // מחזיר את ממוצע הנפגעים לאירוע באיזור ספיציפי
+      avgCasualty = await event.aggregate([
+        { $match: { region_txt: region } },
+        {
+          $group: {
+            _id: "$region_txt",
+            count: { $avg: { $add: ["$nkill", "$nwound"] } },
+          },
+        },
+        { $addFields: { location: await getLocationInRegion(region) } },
+        { $sort: { count: -1 } },
+      ]);
+    } else {
+      // מחזיר את ממוצע הנפגעים לאירוע בכל איזור מסודר מהגבוה לנמוך
+      avgCasualty = await event.aggregate([
+        {
+          $group: {
+            _id: "$region_txt",
+            svg: { $avg: { $add: ["$nkill", "$nwound"] } },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+    }
+    return {
+      description: "מחזיר את ממוצע הנפגעים לאירוע בכל איזור מסודר מהגבוה לנמוך",
+      data: avgCasualty,
+    };
+  } catch (err: any) {
+    console.log("Error in avgCasualty : ", err.message);
     return err.message;
   }
 };
