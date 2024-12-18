@@ -44,6 +44,11 @@ const eventSchema = new Schema<IEvent>({
   nperps: {type: Number, default: 1}//המספר הכולל של המחבלים המשתתפים באירוע
 }); 
 
+eventSchema.index({ attacktype1_txt: 1 });
+eventSchema.index({ iyear: 1 });
+eventSchema.index({ iyear: 1, gname: 1 });
+eventSchema.index({ gname: 1 });
+
 export default model<IEvent>('Event', eventSchema);
 
 

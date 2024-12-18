@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import sidController from "./controllers/sid";
+import analysisController from "./controllers/analysis";
+
 import { connectToMongo } from "./config/db";
 
 const PORT = process.env.PORT || 3000;
@@ -26,6 +28,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api", sidController);
+app.use("/api/analysis", analysisController);
+
 
 
 server.listen(PORT, () => {
