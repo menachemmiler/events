@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, model } from "mongoose";
 
 export interface IRegion extends Document {
-  eventid: number[];
+  eventid: string[];
   region: string;
 }
 

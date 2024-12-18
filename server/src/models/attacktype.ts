@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, model } from "mongoose";
 
 export interface IAttacktype extends Document {
-  eventid: number[];
+  eventid: string[];
   attacktype1_txt: string;
 }
 
