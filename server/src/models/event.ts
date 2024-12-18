@@ -32,7 +32,7 @@ const eventSchema = new Schema<IEvent>({
   city: { type: String },
   latitude: { type: Number },
   longitude: { type: Number },
-  attacktype1_txt: { type: String, required: true },
+  attacktype1_txt: { type: String, required: true },//סוג התקפה
   targtype1_txt: { type: String, required: true },
   target1: { type: String },
   gname: { type: String, required: true },//שם קבוצה
