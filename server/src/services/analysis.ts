@@ -25,22 +25,13 @@ export const deadliestAttackTypesService = async (): Promise<responseDTO> => {
   }
 };
 
-export const getLocationInRegion = async (region: string) => {
-  try {
-    const getLocation = await event.findOne({ region_txt: region });
-    if(!getLocation) throw new Error("cont get location by region!");
-    // console.log({ lon: getLocation.longitude, lat: getLocation.latitude });
-    return { lon: getLocation.longitude, lat: getLocation.latitude };
-  } catch (error: any) {
-    return error.message;
-  }
-};
+
+
 
 export const highestCasualtyRegionsService = async (
   region?: string
 ): Promise<responseDTO> => {
   try {
-    await getLocationInRegion("Western Europe");
     let avgCasualty;
     if (region) {
       // מחזיר את ממוצע הנפגעים לאירוע באיזור ספיציפי
@@ -50,9 +41,10 @@ export const highestCasualtyRegionsService = async (
           $group: {
             _id: "$region_txt",
             count: { $avg: { $add: ["$nkill", "$nwound"] } },
+            longitude: { $first: "$longitude" },
+            latitude: { $first: "$latitude" },
           },
         },
-        { $addFields: { location: await getLocationInRegion(region) } },
         { $sort: { count: -1 } },
       ]);
     } else {
@@ -62,6 +54,8 @@ export const highestCasualtyRegionsService = async (
           $group: {
             _id: "$region_txt",
             svg: { $avg: { $add: ["$nkill", "$nwound"] } },
+            longitude: { $first: "$longitude" },
+            latitude: { $first: "$latitude" },
           },
         },
         { $sort: { count: -1 } },
