@@ -25,9 +25,6 @@ export const deadliestAttackTypesService = async (): Promise<responseDTO> => {
   }
 };
 
-
-
-
 export const highestCasualtyRegionsService = async (
   region?: string
 ): Promise<responseDTO> => {
@@ -67,6 +64,19 @@ export const highestCasualtyRegionsService = async (
     };
   } catch (err: any) {
     console.log("Error in avgCasualty : ", err.message);
+    return err.message;
+  }
+};
+
+export const incidentTrendsService = async (
+  year?: string,
+  month?: string
+  // ): Promise<responseDTO> => {
+): Promise<string> => {
+  try {
+    return "incidentTrendsService";
+  } catch (err: any) {
+    console.log("Error in incidentTrendsService : ", err.message);
     return err.message;
   }
 };
