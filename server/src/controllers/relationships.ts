@@ -1,12 +1,14 @@
 import { Router } from "express";
-import { topGroups } from "../routes/relationships";
+import { deadliestRegions, groupByYear, topGroups } from "../routes/relationships";
 
 const router = Router();
 
+router.get("/top-groups", topGroups);
 
+router.get("/groups-by-year", groupByYear);
 
+router.get("/deadliest-regions", deadliestRegions);
 
-router.get("/top-groups", topGroups)
 
 
 export default router;
