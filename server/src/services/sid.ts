@@ -1,4 +1,4 @@
-import event from "../models/event";
+import event, { IEvent } from "../models/event";
 
 
 
@@ -7,7 +7,7 @@ import event from "../models/event";
 
 export const initDatabase = async () => {
     try {
-      const mylist = require("../../data/globalterrorismdb_0718dist.json");
+      let mylist: IEvent[] = require("../../data/globalterrorismdb_0718dist.json");
       const insertAll = await event.insertMany(mylist);
       return insertAll;
     } catch (err: any) {

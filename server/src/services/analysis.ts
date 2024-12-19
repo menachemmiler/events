@@ -145,26 +145,4 @@ export const incidentTrendsService = async (quary: {
 };
 
 
-// אזורים שבהם ארגונים מסוימים ביצעו את ההתקפות הקטלניות ביותר
-// api/relationships/deadliest-regions/ :קצה כתובת
-// שיטה: GET
-// פרמטרים: שם הארגון )name_group).
-// תיאור: מזהה אזורים שבהם הארגון גרם למספר הנפגעים הגבוה ביותר. לאחר בחירת ארגון, התשובה
-// תכיל את האיזורים שבהם הארגון גרם להתקפות הקטלניות ביותר )כמות הנפגעים, הרוגים ופצועים,
-// הגדולה ביותר ביחס לארגונים האחרים באותו האזור לכל התקופה(
-// a. אפשרויות סינון:
-// i. בחירת ארגון - הצגת markers באיזורים לפי הדרישה
-// ii. בלחיצה על marker, יופיע שם הארגון וכמות הנפגעים
 
-
-
-// Regions where certain organizations have carried out the deadliest attacks
-// Address:api/relationships/deadliest-regions/
-// Method: GET
-// Parameters: Organization name (name_group).
-// Description: Identifies regions where the organization has caused the highest number of casualties. After selecting an organization, the response
-// will contain the regions where the organization has caused the deadliest attacks (the highest number of casualties, deaths and injuries,
-// relative to the other organizations in the same region for the entire period)
-// a. Filtering options:
-// i. Selecting an organization - displaying markers in regions as required
-// ii. Clicking on a marker will display the organization name and the number of casualties
