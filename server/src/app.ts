@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import sidController from "./controllers/sid";
 import analysisController from "./controllers/analysis";
+import relationshipsController from "./controllers/relationships"
 
 import { connectToMongo } from "./config/db";
 
@@ -29,6 +30,8 @@ app.use(cors());
 
 app.use("/api", sidController);
 app.use("/api/analysis", analysisController);
+app.use("/api/relationships", relationshipsController);
+
 
 
 
