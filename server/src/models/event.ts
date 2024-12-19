@@ -46,8 +46,7 @@ const eventSchema = new Schema<IEvent>({
 
 eventSchema.index({ attacktype1_txt: 1 });
 eventSchema.index({ region_txt: 1 });
-
-// eventSchema.index({ iyear: 1 });
+eventSchema.index({ iyear: 1 });
 // eventSchema.index({ iyear: 1, gname: 1 });
 // eventSchema.index({ gname: 1 });
 

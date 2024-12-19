@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { initDatabase } from "../services/sid";
-import { deadliestAttackTypesService, highestCasualtyRegionsService, incidentTrendsService } from "../services/analysis";
-
-
-
+import {
+  deadliestAttackTypesService,
+  highestCasualtyRegionsService,
+  incidentTrendsService,
+} from "../services/analysis";
 
 export const deadliestAttackTypes = async (req: Request, res: Response) => {
   try {
@@ -15,9 +16,14 @@ export const deadliestAttackTypes = async (req: Request, res: Response) => {
   }
 };
 
-export const highestCasualtyRegions = async (req: Request<{region:string}>, res: Response) => {
+export const highestCasualtyRegions = async (
+  req: Request<{ region: string }>,
+  res: Response
+) => {
   try {
-    const deadliestAttack = await highestCasualtyRegionsService(req.params.region);
+    const deadliestAttack = await highestCasualtyRegionsService(
+      req.params.region
+    );
     res.status(200).json(deadliestAttack);
   } catch (err) {
     console.log(err);
@@ -25,9 +31,15 @@ export const highestCasualtyRegions = async (req: Request<{region:string}>, res:
   }
 };
 
-export const incidentTrends = async (req: Request<{year:string, month:string}>, res: Response) => {
+export const incidentTrends = async (
+  req: Request<any, any, any, { year?: string; month?: string; from?:string, to?:string }>,
+  res: Response
+) => {
   try {
-    const deadliestAttack = await incidentTrendsService(req.params.year, req.params.month);
+    // console.log(req.query);
+    const deadliestAttack = await incidentTrendsService(
+      req.query
+    );
     res.status(200).json(deadliestAttack);
   } catch (err) {
     console.log(err);

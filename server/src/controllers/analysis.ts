@@ -10,7 +10,7 @@ router.get("/deadliest-attack-types", deadliestAttackTypes);
 router.get("/highest-casualty-regions/:region?", highestCasualtyRegions)
 
 //.3 מגמות שנתיות וחודשיות בתדירות התקריות
-router.get("/incident-trends/:year?/:month?", incidentTrends)
+router.get("/incident-trends", incidentTrends)
 
 
 export default router;
