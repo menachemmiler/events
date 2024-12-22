@@ -12,7 +12,7 @@ const initialState: attackState = {
 };
 
 export const getAttacks = createAsyncThunk(
-  "analysis/deadliest-attack-types",
+  "attacks",
   async (search: string, thunkApi) => {
     try {
       const res = await fetch(
@@ -32,7 +32,7 @@ export const getAttacks = createAsyncThunk(
         );
       }
       const data = await res.json();
-      // console.log({ data });
+      console.log({ data });
       return thunkApi.fulfillWithValue(data);
     } catch (err: any) {
       return thunkApi.rejectWithValue(

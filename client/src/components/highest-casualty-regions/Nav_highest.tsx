@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { IoStatsChartOutline } from "react-icons/io5";
 
-export default function Nav() {
+export default function Nav_highest() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (

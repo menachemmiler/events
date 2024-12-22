@@ -10,10 +10,16 @@ export default function Header() {
     navigate("/pages/attack-types");
   };
 
+  const heandleHighestCasualtyRegions = async () => {
+    navigate("/pages/highest-casualty-regions");
+  };
+
+
 
   return (
     <div className="header">
       <Button onClick={heandleAttackTypes}>הצג לפי סוג אירוע</Button>
+      <Button onClick={heandleHighestCasualtyRegions}>אזורי הנפגעים הגבוהים ביותר</Button>
     </div>
   );
 }

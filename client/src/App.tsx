@@ -4,6 +4,9 @@ import Pages from "./components/Pages";
 import Table from "./components/attack-types/Table";
 import Deshboard from "./components/attack-types/Deshboard";
 import AttackTypes from "./components/attack-types/AttackTypes";
+import HighestCasualtyRegions from "./components/highest-casualty-regions/HighestCasualtyRegions";
+import Table_highest from "./components/highest-casualty-regions/Table_highest";
+import DeshboardhHighest from "./components/highest-casualty-regions/DeshboardhHighest";
 
 function App() {
   return (
@@ -16,6 +19,11 @@ function App() {
             <Route path="attack-types" element={<AttackTypes />}>
               <Route path="table" element={<Table />} />
               <Route index element={<Deshboard />} />
+            </Route>
+
+            <Route path="highest-casualty-regions" element={<HighestCasualtyRegions />}>
+              <Route path="table" element={<Table_highest />} />
+              <Route index element={<DeshboardhHighest />} />
             </Route>
             {/* <Route path="orders" element={<OrdersList />} />
             <Route path="inventory" element={<InventoryList />} />
