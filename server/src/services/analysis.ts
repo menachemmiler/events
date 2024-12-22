@@ -25,13 +25,16 @@ export const deadliestAttackTypesService = async (): Promise<responseDTO> => {
   }
 };
 
-
-export const highestCasualtyRegionsService = async (
-  region?: string
-): Promise<responseDTO> => {
+export const highestCasualtyRegionsService = async (query: {
+  region?: string;
+  country?: string;
+  city?: string;
+}): Promise<responseDTO> => {
   try {
+    const { city, region, country } = query;
     let avgCasualty;
     if (region) {
+      console.log(region);
       // מחזיר את ממוצע הנפגעים לאירוע באיזור ספציפי
       avgCasualty = await event.aggregate([
         { $match: { region_txt: region } },
@@ -43,7 +46,28 @@ export const highestCasualtyRegionsService = async (
         },
         { $sort: { avg: -1 } },
       ]);
-    } else {
+    } else if (country) {
+      avgCasualty = await event.aggregate([
+        { $match: { country_txt: country } },
+        {
+          $group: {
+            _id: "$country_txt",
+            avg: { $avg: { $add: ["$nkill", "$nwound"] } },
+          },
+        },
+      ]);
+    } else if(city){
+      avgCasualty = await event.aggregate([
+        { $match: { city: city } },
+        {
+          $group: {
+            _id: "$city",
+            avg: { $avg: { $add: ["$nkill", "$nwound"] } },
+          },
+        },
+      ]);
+    }
+    else {
       // מחזיר את ממוצע הנפגעים לאירוע בכל איזור מסודר מהגבוה לנמוך
       avgCasualty = await event.aggregate([
         {
@@ -74,7 +98,6 @@ export const highestCasualtyRegionsService = async (
     return { description: "Error", data: err.message };
   }
 };
-
 
 // פרמטרים: שנה, חודש )אופציונלי(.
 //   תיאור: מחזיר תדירות תקריות לפי שנים וחודשים )כמות התקריות הייחודיות במהלך התקופה הנבחנת.
@@ -152,8 +175,9 @@ export const incidentTrendsService = async (quary: {
   }
 };
 
-
-export const getCoordinates = async (regionName: string): Promise<{
+export const getCoordinates = async (
+  regionName: string
+): Promise<{
   latitude: number;
   longitude: number;
 } | null> => {
@@ -171,7 +195,7 @@ export const getCoordinates = async (regionName: string): Promise<{
         const longitude = result.geometry.lng;
         return { latitude, longitude };
       } else {
-        console.log(168)
+        console.log(168);
         console.log(`No results found for ${regionName}`);
         return null;
       }
@@ -183,8 +207,4 @@ export const getCoordinates = async (regionName: string): Promise<{
     console.error("Error:", error);
     return null;
   }
-}
-
-
-
-
+};

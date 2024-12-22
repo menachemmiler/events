@@ -17,12 +17,13 @@ export const deadliestAttackTypes = async (req: Request, res: Response) => {
 };
 
 export const highestCasualtyRegions = async (
-  req: Request<{ region: string }>,
+  req: Request<any, any, any, { region?: string, country?: string, city?: string }>,
   res: Response
 ) => {
   try {
+    // console.log(req.query);
     const deadliestAttack = await highestCasualtyRegionsService(
-      req.params.region
+      req.query
     );
     res.status(200).json(deadliestAttack);
   } catch (err) {
