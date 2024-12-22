@@ -22,11 +22,11 @@ export default function Nav() {
 
   const heandleShowTable = async () => {
     // dispatch(getAllOrders())
-    navigate("/pages/highest-casualty-regions/table");
+    navigate("/pages/attack-types/table");
   };
 
   const heandleShowDashboard = async () => {
-    navigate("/pages/highest-casualty-regions");
+    navigate("/pages/attack-types");
   };
 
   return (
