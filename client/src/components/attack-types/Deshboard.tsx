@@ -9,32 +9,59 @@ export default function Dashboard() {
 
   const attacks = useAppSelector((state) => state.attack.data?.data);
   const { status } = useAppSelector((state) => state.attack);
+  const [selectedAttacks, setSelectedAttacks] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     dispatch(getAttacks("analysis/deadliest-attack-types"));
-  }, []);
+  }, [dispatch]);
 
-
-
-  status == DataStatus.LOADING && <>dccbdhb</>
-
-  // אם המידע התקבל בהצלחה
   if (status === DataStatus.SUCCESS) {
-    // גרף 1 - התקפות מסוגים שונים
     const pieData1 = attacks?.map((a, index) => ({
       id: index,
       value: a.count,
       label: a._id,
     }));
 
+    
+    // סינון התקפות לפי הבחירות של המשתמש
+    const filteredData = pieData1?.filter((item) =>
+      selectedAttacks.includes(item.label)
+    );
+
+    // פונקציה לעדכון הבחירות של המשתמש
+    const handleCheckboxChange = (label: string) => {
+      setSelectedAttacks((prevSelected) =>
+        prevSelected.includes(label)
+          ? prevSelected.filter((item) => item !== label)
+          : [...prevSelected, label]
+      );
+    };
+
     return (
       <div className="dashboard">
-        dashboard
-        <PieChart series={[{ data: pieData1 ?? []}]} width={500} height={300} />
+        <h2>דשבורד</h2>
+
+        <div className="checkboxes">
+          {attacks?.map((attack) => (
+            <label key={attack._id}>
+              <input
+                type="checkbox"
+                checked={selectedAttacks.includes(attack._id)}
+                onChange={() => handleCheckboxChange(attack._id)}
+              />
+              {attack._id}
+            </label>
+          ))}
+        </div>
+
+        <PieChart
+          series={[{ data: filteredData ?? [] }]}
+          width={500}
+          height={300}
+        />
       </div>
     );
   }
 
-  // במקרה של כשלון בהבאת המידע, אפשר להחזיר הודעת שגיאה או לטעון נתונים
   return <div>טעינת נתונים...</div>;
 }

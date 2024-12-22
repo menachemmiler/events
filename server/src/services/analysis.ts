@@ -25,21 +25,20 @@ export const deadliestAttackTypesService = async (): Promise<responseDTO> => {
   }
 };
 
+
 export const highestCasualtyRegionsService = async (
   region?: string
 ): Promise<responseDTO> => {
   try {
     let avgCasualty;
     if (region) {
-      // מחזיר את ממוצע הנפגעים לאירוע באיזור ספיציפי
+      // מחזיר את ממוצע הנפגעים לאירוע באיזור ספציפי
       avgCasualty = await event.aggregate([
         { $match: { region_txt: region } },
         {
           $group: {
             _id: "$region_txt",
             avg: { $avg: { $add: ["$nkill", "$nwound"] } },
-            longitude: { $first: "$longitude" },
-            latitude: { $first: "$latitude" },
           },
         },
         { $sort: { avg: -1 } },
@@ -51,22 +50,31 @@ export const highestCasualtyRegionsService = async (
           $group: {
             _id: "$region_txt",
             avg: { $avg: { $add: ["$nkill", "$nwound"] } },
-            longitude: { $first: "$longitude" },
-            latitude: { $first: "$latitude" },
           },
         },
         { $sort: { avg: -1 } },
       ]);
     }
+
+    for (let i = 0; i < avgCasualty.length; i++) {
+      const regionName = avgCasualty[i]._id;
+      const coordinates = await getCoordinates(regionName);
+
+      if (coordinates) {
+        avgCasualty[i].coordinates = coordinates;
+      }
+    }
+
     return {
       description: "מחזיר את ממוצע הנפגעים לאירוע בכל איזור מסודר מהגבוה לנמוך",
       data: avgCasualty,
     };
   } catch (err: any) {
     console.log("Error in avgCasualty : ", err.message);
-    return err.message;
+    return { description: "Error", data: err.message };
   }
 };
+
 
 // פרמטרים: שנה, חודש )אופציונלי(.
 //   תיאור: מחזיר תדירות תקריות לפי שנים וחודשים )כמות התקריות הייחודיות במהלך התקופה הנבחנת.
@@ -143,6 +151,40 @@ export const incidentTrendsService = async (quary: {
     };
   }
 };
+
+
+export const getCoordinates = async (regionName: string): Promise<{
+  latitude: number;
+  longitude: number;
+} | null> => {
+  const apiKey = "5879788fbb5a497fb68ed497960ff150";
+  const url = `http://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+    regionName
+  )}&key=${apiKey}`;
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.total_results > 0) {
+        const result = data.results[0];
+        const latitude = result.geometry.lat;
+        const longitude = result.geometry.lng;
+        return { latitude, longitude };
+      } else {
+        console.log(168)
+        console.log(`No results found for ${regionName}`);
+        return null;
+      }
+    } else {
+      console.error(`Error fetching data: ${response.status}`);
+      return null;
+    }
+  } catch (error: any) {
+    console.error("Error:", error);
+    return null;
+  }
+}
+
 
 
 

@@ -2,13 +2,11 @@ import { Outlet } from "react-router-dom";
 import Nav from "./Nav";
 
 const AttackTypes = () => {
-
-
   return (
     <>
       <Nav />
       <div className="content">
-        <Outlet />
+        <Outlet context={[1, 2]}/>
       </div>
     </>
   );
