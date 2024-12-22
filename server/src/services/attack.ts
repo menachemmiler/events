@@ -2,6 +2,7 @@ import e from "express";
 import responseDTO from "../DTO/response";
 import { newEventDTO } from "../DTO/newEventDTO";
 import event, { IEvent } from "../models/event";
+import {v4 } from "uuid";
 
 //חמשת ארגוני הטרור הבולטים באזור מסוים
 export const createService = async (
@@ -59,21 +60,23 @@ export const createService = async (
     ]);
 
     //חיתוך מספר האירוע לאותו יום
-    const numCurrEventInDate = parseInt(lastEventInSameDate[0].eventid.toString().slice(-4)) + 1;
+    const numCurrEventInDate =
+      parseInt(lastEventInSameDate[0].eventid.toString().slice(-4)) + 1;
+    console.log({ numCurrEventInDate });
 
     //הכנסה לתוך משתנה eventid = את השנה + חודש + יום + מספר אחד מעל ה-eventid של האירוע האחרון
-    const eventid = ("000" + numCurrEventInDate).slice(-4);
-    // console.log({eventid})
+    const eventid = iyear.toString() + imonth.toString() + iday.toString() +  ("000" + numCurrEventInDate.toString()).slice(-4);
+    console.log({ eventid });
 
     //שמירת האירוע ושינוי כל פרמטר לפי ה-'סוג' שלו
     const newEvent = await event.create({
-      eventid,
+      eventid: v4(),
       iyear,
       imonth,
       iday,
       country_txt,
       region_txt,
-      city, 
+      city,
       latitude,
       longitude,
       attacktype1_txt,
