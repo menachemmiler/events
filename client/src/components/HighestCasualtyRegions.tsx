@@ -57,6 +57,8 @@ const HighestCasualtyRegions = () => {
     }
   };
 
+
+
   useEffect(() => {
     console.log({ attackData });
   }, [attackData]);
@@ -94,14 +96,17 @@ const HighestCasualtyRegions = () => {
 
   // חישוב מרכז המפה על פי הגבולות
   let centerPosition: [number, number];
-  if(positions.length > 1){//אם יש כמה שיקח אותו לבעל רמת הסיכון הגבוהה ביותר
-    centerPosition = (positions[0].position as [number, number])
-  }else if (positions.length){
-    centerPosition = [(bounds.minLat + bounds.maxLat) / 2, (bounds.minLng + bounds.maxLng) / 2]
-  }else{
-    centerPosition = initialPosition
+  if (positions.length > 1) {
+    //אם יש כמה שיקח אותו לבעל רמת הסיכון הגבוהה ביותר
+    centerPosition = positions[0].position as [number, number];
+  } else if (positions.length) {
+    centerPosition = [
+      (bounds.minLat + bounds.maxLat) / 2,
+      (bounds.minLng + bounds.maxLng) / 2,
+    ];
+  } else {
+    centerPosition = initialPosition;
   }
-
 
   return (
     <div className="highestCasualtyRegions">

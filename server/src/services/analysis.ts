@@ -33,7 +33,6 @@ export const highestCasualtyRegionsService = async (query: {
 }): Promise<responseDTO> => {
   try {
     let { city, region, country } = query;
-    if(!city && !region && !country) throw new Error("region or country or city is required!");
     let avgCasualty;
     if (region) {
       region = toTitleCase(region);
