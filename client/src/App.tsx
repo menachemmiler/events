@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import Menu from "./components/Menu";
+// import { socket } from "./socket/io";
+import DeadliestAttackTypes from "./components/DeadliestAttackTypes";
+import IncidentTrends from "./components/IncidentTrends";
+import HighestCasualtyRegions from "./components/HighestCasualtyRegions";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route index element={<Menu />} />
+        <Route
+          path="deadliest-attack-types"
+          element={<DeadliestAttackTypes />}
+        />
+        <Route path="incident-trends" element={<IncidentTrends />} />
+        <Route path="highest-casualty-regions" element={<HighestCasualtyRegions />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
+
+
+
+// enum TypeShow{
+//     map = "map",
+//     graf = "graf"
+// }
+// const [currTypeShow, setCurrTypeShow] = useState<TypeShow>(TypeShow.graf);

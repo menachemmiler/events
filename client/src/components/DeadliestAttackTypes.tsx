@@ -1,0 +1,97 @@
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { useEffect, useState } from "react";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const DeadliestAttackTypes = () => {
+  const [attackData, setAttackData] = useState<any[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<any[]>([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:1313/api/analysis/deadliest-attack-types"
+      );
+      const data = await response.json();
+      setAttackData(data.data); // עדכון ה-state עם הנתונים
+      setSelectedTypes(data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  
+  const chartData = {
+    labels: selectedTypes.map((item) => item._id), // סוגי התקפות
+    datasets: [
+      {
+        label: "מספר הנפגעים",
+        data: selectedTypes.map((item) => item.count), // מספר הנפגעים לכל סוג התקפה
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(255, 99, 132, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  return (
+    <div className="deadliestAttackTypes">
+      <div className="selectTypes">
+        {attackData.map((type) => (
+          <div key={type._id}>
+            <input
+              type="checkbox"
+              id={type._id}
+              checked={selectedTypes.includes(type)}
+              onChange={() => {
+                if (selectedTypes.includes(type)) {
+                  setSelectedTypes(selectedTypes.filter((t) => t !== type));
+                } else {
+                  setSelectedTypes([...selectedTypes, type]);
+                }
+              }}
+            />
+            <label htmlFor={type._id}>{type._id}</label>
+          </div>
+        ))}
+      </div>
+
+      <h1>גרף סוגי התקפות</h1>
+      <div className="graf">
+        <Bar options={options} data={chartData} />
+      </div>
+    </div>
+  );
+};
+
+export default DeadliestAttackTypes;
+
