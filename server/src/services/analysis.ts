@@ -1,5 +1,6 @@
 import responseDTO from "../DTO/response";
 import event from "../models/event";
+import { toTitleCase } from "../utils/all";
 
 //תיאור: מחזיר סוגי התקפות מדורגים לפי מספר הנפגעים הכולל.
 export const deadliestAttackTypesService = async (): Promise<responseDTO> => {
@@ -31,9 +32,11 @@ export const highestCasualtyRegionsService = async (query: {
   city?: string;
 }): Promise<responseDTO> => {
   try {
-    const { city, region, country } = query;
+    let { city, region, country } = query;
+    if(!city && !region && !country) throw new Error("region or country or city is required!");
     let avgCasualty;
     if (region) {
+      region = toTitleCase(region);
       console.log(region);
       // מחזיר את ממוצע הנפגעים לאירוע באיזור ספציפי
       avgCasualty = await event.aggregate([
@@ -47,6 +50,7 @@ export const highestCasualtyRegionsService = async (query: {
         { $sort: { avg: -1 } },
       ]);
     } else if (country) {
+      country = toTitleCase(country);
       avgCasualty = await event.aggregate([
         { $match: { country_txt: country } },
         {
@@ -57,6 +61,7 @@ export const highestCasualtyRegionsService = async (query: {
         },
       ]);
     } else if (city) {
+      city = toTitleCase(city);
       avgCasualty = await event.aggregate([
         { $match: { city: city } },
         {
@@ -111,6 +116,7 @@ export const incidentTrendsService = async (quary: {
   from?: string;
   to?: string;
 }): Promise<responseDTO> => {
+  
   try {
     let incidentTrends;
     let description;
@@ -209,3 +215,6 @@ export const getCoordinates = async (
     return null;
   }
 };
+
+
+
