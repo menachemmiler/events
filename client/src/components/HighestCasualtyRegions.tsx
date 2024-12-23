@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -61,22 +61,47 @@ const HighestCasualtyRegions = () => {
     console.log({ attackData });
   }, [attackData]);
 
-  // מיקום התחלתי לברירת מחדל
+  // מיקום התחלתי להצגה כש-הדף נטען
   const initialPosition: [number, number] = [51.505, -0.09];
-  const initialZoom = 13;
+  const initialZoom = 4; // זום קבוע
 
-  // מקומות לאזורים שהתקבלו
+  // לוודאות שלכולם יש נקודות ציון
   const positions = attackData
     .filter(
       (region) =>
         !isNaN(region.coordinates.latitude) &&
-        !isNaN(region.coordinates.longitude)
+        !isNaN(region.coordinates.longitude) &&
+        region.coordinates.latitude !== null &&
+        region.coordinates.longitude !== null
     )
     .map((region) => ({
       position: [region.coordinates.latitude, region.coordinates.longitude],
       name: region._id,
       avg: region.avg,
     }));
+
+  // חישוב גבולות המיקומים
+  const bounds = positions.reduce(
+    (total, currentValue) => {
+      total.minLat = Math.min(total.minLat, currentValue.position[0]);
+      total.maxLat = Math.max(total.maxLat, currentValue.position[0]);
+      total.minLng = Math.min(total.minLng, currentValue.position[1]);
+      total.maxLng = Math.max(total.maxLng, currentValue.position[1]);
+      return total;
+    },
+    { minLat: Infinity, maxLat: -Infinity, minLng: Infinity, maxLng: -Infinity }
+  );
+
+  // חישוב מרכז המפה על פי הגבולות
+  let centerPosition: [number, number];
+  if(positions.length > 1){//אם יש כמה שיקח אותו לבעל רמת הסיכון הגבוהה ביותר
+    centerPosition = (positions[0].position as [number, number])
+  }else if (positions.length){
+    centerPosition = [(bounds.minLat + bounds.maxLat) / 2, (bounds.minLng + bounds.maxLng) / 2]
+  }else{
+    centerPosition = initialPosition
+  }
+
 
   return (
     <div className="highestCasualtyRegions">
@@ -87,6 +112,8 @@ const HighestCasualtyRegions = () => {
           value={city}
           onChange={(e) => {
             setCity(e.target.value);
+            setCountry("");
+            setRegion("");
           }}
         />
         <input
@@ -95,6 +122,8 @@ const HighestCasualtyRegions = () => {
           value={country}
           onChange={(e) => {
             setCountry(e.target.value);
+            setCity("");
+            setRegion("");
           }}
         />
         <input
@@ -103,21 +132,27 @@ const HighestCasualtyRegions = () => {
           value={region}
           onChange={(e) => {
             setRegion(e.target.value);
+            setCountry("");
+            setCity("");
           }}
         />
         <button
           onClick={() => {
-            fetchData(region, country, city);
+            setCountry("");
+            setCity("");
+            setRegion("");
+            fetchData();
           }}
         >
-          חפש
+          חפש לפי כל האיזורים
         </button>
+        <button onClick={() => fetchData(region, country, city)}>🔍</button>
       </div>
       <div className="map">
         <MapContainer
           style={{ width: "100%", height: "100%" }}
-          center={initialPosition}
-          zoom={initialZoom}
+          // center={centerPosition}
+          zoom={initialZoom} // זום קבוע
           scrollWheelZoom={false}
         >
           <TileLayer
@@ -136,11 +171,10 @@ const HighestCasualtyRegions = () => {
           ))}
 
           {/* עדכון המפה עם מיקום מרכז וזום */}
-          {positions.length > 0 ? (
-            <UpdateMapView position={positions[0].position} zoom={12} />
-          ) : (
-            <UpdateMapView position={initialPosition} zoom={13} />
-          )}
+          <UpdateMapView
+            position={centerPosition}
+            zoom={initialZoom} // זום קבוע
+          />
         </MapContainer>
       </div>
     </div>

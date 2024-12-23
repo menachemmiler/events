@@ -56,7 +56,7 @@ export const highestCasualtyRegionsService = async (query: {
           },
         },
       ]);
-    } else if(city){
+    } else if (city) {
       avgCasualty = await event.aggregate([
         { $match: { city: city } },
         {
@@ -66,8 +66,7 @@ export const highestCasualtyRegionsService = async (query: {
           },
         },
       ]);
-    }
-    else {
+    } else {
       // מחזיר את ממוצע הנפגעים לאירוע בכל איזור מסודר מהגבוה לנמוך
       avgCasualty = await event.aggregate([
         {
@@ -80,18 +79,21 @@ export const highestCasualtyRegionsService = async (query: {
       ]);
     }
 
+    const toReturen = [];
+
     for (let i = 0; i < avgCasualty.length; i++) {
       const regionName = avgCasualty[i]._id;
       const coordinates = await getCoordinates(regionName);
 
       if (coordinates) {
         avgCasualty[i].coordinates = coordinates;
+        toReturen.push(avgCasualty[i]);
       }
     }
 
     return {
       description: "מחזיר את ממוצע הנפגעים לאירוע בכל איזור מסודר מהגבוה לנמוך",
-      data: avgCasualty,
+      data: toReturen,
     };
   } catch (err: any) {
     console.log("Error in avgCasualty : ", err.message);
@@ -139,7 +141,6 @@ export const incidentTrendsService = async (quary: {
       ]);
       description = `כמות הפיגועים בכל חודש ב-שנה ${year} `;
     } else if (from && to) {
-      //to get sum events in evry year between 'from' to 'to'
       incidentTrends = await event.aggregate([
         {
           $match: {

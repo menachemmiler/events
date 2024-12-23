@@ -18,14 +18,33 @@
   flex-direction: column;
 }
 
-.deadliestAttackTypes,
-.incidentTrends {
+.deadliestAttackTypes {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.deadliestAttackTypes > .graf {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.graf > .bar {
+  max-height: 90%;
+}
+
+.deadliestAttackTypes > .selectTypes {
+  height: 20%;
+  width: 100%;
+  display: flex;
   justify-content: space-around;
+  align-items: center;
+  background-color: gray;
 }
 
 .highestCasualtyRegions {
@@ -36,25 +55,74 @@
   align-items: center;
 }
 
-
-
 .highestCasualtyRegions > .map {
   width: 100%;
-  height: 85%; 
+  height: 85%;
   /* position: static; */
 }
 
-.map > div{
+.map > div {
   width: 100%;
   height: 100%;
 }
 
-.graf {
+.incidentTrends {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.incidentTrends > .graf {
   height: 80%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.graf > .line {
+  max-height: 90%;
+}
+
+.incidentTrends > .filter {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: gray;
+
+  input {
+    width: 20%;
+    max-width: 10%;
+    height: 40%;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    direction: rtl;
+    color: black;
+  }
+  button {
+    width: 20%;
+    max-width: 10%;
+    height: 40%;
+    border-radius: 10px;
+    border: none;
+    color: gray;
+    font-size: 1.2rem;
+    font-weight: 600;
+    direction: rtl;
+    color: black;
+  }
+
+  select{
+    
+  }
+
 }
 
 .left,
@@ -64,7 +132,7 @@
   height: 50%;
 }
 
-.filter {
+.highestCasualtyRegions > .filter {
   width: 100%;
   height: 15%;
   display: flex;
@@ -72,21 +140,31 @@
   justify-content: center;
   gap: 2%;
   background-color: blue;
+
+  input {
+    width: 20%;
+    height: 40%;
+    border-radius: 10px;
+    border: none;
+    color: gray;
+    font-size: 1.2rem;
+    font-weight: 600;
+    direction: rtl;
+  }
+  button {
+    width: 20%;
+    height: 40%;
+    border-radius: 10px;
+    border: none;
+    color: gray;
+    font-size: 1.2rem;
+    font-weight: 600;
+    direction: rtl;
+  }
+
+  button {
+    color: black;
+    background-color: gray;
+  }
 }
 
-.filter > input,
-button {
-  width: 20%;
-  height: 40%;
-  border-radius: 10px;
-  border: none;
-  color: gray;
-  font-size: 1.2rem;
-  font-weight: 600;
-  direction: rtl;
-}
-
-.filter > button {
-  color: black;
-  background-color: gray;
-}

@@ -29,7 +29,7 @@ const DeadliestAttackTypes = () => {
         "http://localhost:1313/api/analysis/deadliest-attack-types"
       );
       const data = await response.json();
-      setAttackData(data.data); // עדכון ה-state עם הנתונים
+      setAttackData(data.data);
       setSelectedTypes(data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -40,16 +40,15 @@ const DeadliestAttackTypes = () => {
     fetchData();
   }, []);
 
-  
   const chartData = {
     labels: selectedTypes.map((item) => item._id), // סוגי התקפות
     datasets: [
       {
         label: "מספר הנפגעים",
         data: selectedTypes.map((item) => item.count), // מספר הנפגעים לכל סוג התקפה
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: `rgba(255, 99, 132, 0.5)`,
         borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
+        // borderWidth: 1,
       },
     ],
   };
@@ -85,13 +84,12 @@ const DeadliestAttackTypes = () => {
         ))}
       </div>
 
-      <h1>גרף סוגי התקפות</h1>
       <div className="graf">
-        <Bar options={options} data={chartData} />
+        <h1>גרף סוגי התקפות</h1>
+        <Bar options={options} data={chartData} className="bar"/>
       </div>
     </div>
   );
 };
 
 export default DeadliestAttackTypes;
-

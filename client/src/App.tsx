@@ -14,8 +14,9 @@ function App() {
           path="deadliest-attack-types"
           element={<DeadliestAttackTypes />}
         />
-        <Route path="incident-trends" element={<IncidentTrends />} />
         <Route path="highest-casualty-regions" element={<HighestCasualtyRegions />} />
+        <Route path="incident-trends" element={<IncidentTrends />} />
+
       </Routes>
     </>
   );
