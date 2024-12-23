@@ -1,38 +1,35 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Menu from "./components/Menu";
-import Pages from "./components/Pages";
-import Table from "./components/attack-types/Table";
-import Deshboard from "./components/attack-types/Deshboard";
-import AttackTypes from "./components/attack-types/AttackTypes";
-import HighestCasualtyRegions from "./components/highest-casualty-regions/HighestCasualtyRegions";
-import Table_highest from "./components/highest-casualty-regions/Table_highest";
-import DeshboardhHighest from "./components/highest-casualty-regions/DeshboardhHighest";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
-  return (
-    <div className="app">
-      {/* <Pages /> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Menu />} />
-          <Route path="pages" element={<Pages />}>
-            <Route path="attack-types" element={<AttackTypes />}>
-              <Route path="table" element={<Table />} />
-              <Route index element={<Deshboard />} />
-            </Route>
+  const [count, setCount] = useState(0)
 
-            <Route path="highest-casualty-regions" element={<HighestCasualtyRegions />}>
-              <Route path="table" element={<Table_highest />} />
-              <Route index element={<DeshboardhHighest />} />
-            </Route>
-            {/* <Route path="orders" element={<OrdersList />} />
-            <Route path="inventory" element={<InventoryList />} />
-            <Route path="charts" element={<Deshboard />} /> */}
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+  return (
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  )
 }
 
-export default App;
+export default App
