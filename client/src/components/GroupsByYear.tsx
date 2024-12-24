@@ -1,6 +1,6 @@
 
 
-import { Button, Menu, MenuItem, Select } from "@mui/material";
+import { Button,  MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
@@ -102,6 +102,20 @@ ii. בחירת ארגון מרשימה - הצגת התקריות לפני שני
             </MenuItem>
           ))}
         </Select>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={group}
+          label="cdwdwdwddw"
+          onChange={(e) => setGroup(e.target.value)}
+        >
+          {allGroups.map((group: { _id: string }) => (
+            <MenuItem key={group._id} value={group._id}>
+              {group._id}
+            </MenuItem>
+          ))}
+        </Select>
+    
         <Button onClick={() => fetchData({ year })}>year 🔍</Button>
         <Button onClick={() => fetchData({ group })}>by gname 🌎</Button>
       </div>
