@@ -2,4 +2,4 @@ import { io } from "socket.io-client";
 
 
 
-export const socket = io(`http://localhost:1313`); // התחברות לשרת
+export const socket = io(`https://events-v85n.onrender.com`); // התחברות לשרת

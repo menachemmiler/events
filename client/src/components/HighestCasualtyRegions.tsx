@@ -41,7 +41,7 @@ const HighestCasualtyRegions = () => {
   ) => {
     try {
       const response = await fetch(
-        `http://localhost:1313/api/analysis/highest-casualty-regions${
+        `https://events-v85n.onrender.com/api/analysis/highest-casualty-regions${
           region
             ? `?region=${region}`
             : country
