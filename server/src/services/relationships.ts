@@ -48,7 +48,23 @@ export const groupByYearService = async (quary: {
 }): Promise<responseDTO> => {
   try {
     const { gname, year } = quary;
-    if (!gname && !year) throw new Error("gname or year quary is required!");
+    if (!gname && !year) {
+      //to returen list of all  oranizations + list of all years that in the database
+      const allGnames = await event.aggregate([
+        { $group: { _id: "$gname" } },
+        { $sort: { _id: 1 } },
+      ]);
+      const allYears = await event.aggregate([
+        { $group: { _id: "$iyear" } },
+        { $sort: { _id: 1 } },
+      ]);
+      return {
+        data: {
+          allGnames,
+          allYears,
+        },
+      };
+    }
     let groupBy;
     let description;
 
@@ -76,13 +92,14 @@ export const groupByYearService = async (quary: {
   }
 };
 
-
 export const deadliestRegionsService = async (quary: {
   gname: string;
 }): Promise<responseDTO> => {
   try {
     const { gname } = quary;
-    if (!gname) throw new Error("gname quary is required!");
+
+    if (!gname) throw new Error("!gname");
+
 
     const allCurrGnameAttacks = await event.aggregate([
       { $match: { gname: gname } },
