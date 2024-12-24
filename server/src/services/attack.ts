@@ -2,7 +2,8 @@ import e from "express";
 import responseDTO from "../DTO/response";
 import { newEventDTO } from "../DTO/newEventDTO";
 import event, { IEvent } from "../models/event";
-import {v4 } from "uuid";
+import { v4 } from "uuid";
+import { updateEventDTO } from "../DTO/updateEventDTO";
 
 //חמשת ארגוני הטרור הבולטים באזור מסוים
 export const createService = async (
@@ -52,21 +53,21 @@ export const createService = async (
     ) {
       throw new Error("חסר מידע ליצירת אירוע חדש!");
     }
-    //קבלה לתוך משתנה את האירוע האחרון שהיה באותה שנה וחודש ויום
-    let lastEventInSameDate: IEvent[] = await event.aggregate([
-      { $match: { iyear: iyear, imonth: imonth, iday: iday } },
-      { $sort: { eventid: -1 } },
-      { $limit: 1 },
-    ]);
+    // //קבלה לתוך משתנה את האירוע האחרון שהיה באותה שנה וחודש ויום
+    // let lastEventInSameDate: IEvent[] = await event.aggregate([
+    //   { $match: { iyear: iyear, imonth: imonth, iday: iday } },
+    //   { $sort: { eventid: -1 } },
+    //   { $limit: 1 },
+    // ]);
 
-    //חיתוך מספר האירוע לאותו יום
-    const numCurrEventInDate =
-      parseInt(lastEventInSameDate[0].eventid.toString().slice(-4)) + 1;
-    console.log({ numCurrEventInDate });
+    // //חיתוך מספר האירוע לאותו יום
+    // const numCurrEventInDate =
+    //   parseInt(lastEventInSameDate[0].eventid.toString().slice(-4)) + 1;
+    // console.log({ numCurrEventInDate });
 
-    //הכנסה לתוך משתנה eventid = את השנה + חודש + יום + מספר אחד מעל ה-eventid של האירוע האחרון
-    const eventid = iyear.toString() + imonth.toString() + iday.toString() +  ("000" + numCurrEventInDate.toString()).slice(-4);
-    console.log({ eventid });
+    // //הכנסה לתוך משתנה eventid = את השנה + חודש + יום + מספר אחד מעל ה-eventid של האירוע האחרון
+    // const eventid = iyear.toString() + imonth.toString() + iday.toString() +  ("000" + numCurrEventInDate.toString()).slice(-4);
+    // // console.log({ eventid });
 
     //שמירת האירוע ושינוי כל פרמטר לפי ה-'סוג' שלו
     const newEvent = await event.create({
@@ -93,6 +94,16 @@ export const createService = async (
 
     //החזרת תוצאת שמירת האירוע
     return { description: "האירוע שנוצר", data: newEvent };
+  } catch (err: any) {
+    return err.message;
+  }
+};
+
+//update attack
+export const updateService = async ( body: updateEventDTO) => {
+  try {
+    const updatedEvent = await event.findByIdAndUpdate(body._id, body);
+    return updatedEvent;
   } catch (err: any) {
     return err.message;
   }

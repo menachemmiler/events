@@ -3,8 +3,8 @@ import cors from "cors";
 import "dotenv/config";
 import sidController from "./controllers/sid";
 import analysisController from "./controllers/analysis";
-import relationshipsController from "./controllers/relationships"
-import attackController from "./controllers/attack"
+import relationshipsController from "./controllers/relationships";
+import attackController from "./controllers/attack";
 
 import { connectToMongo } from "./config/db";
 
@@ -24,7 +24,7 @@ export const io = new Server(server, {
     methods: "*",
   },
 });
-import "./socket/io";//מייבא את הקובץ של הסוקטים
+import "./socket/io"; //מייבא את הקובץ של הסוקטים
 
 app.use(express.json());
 app.use(cors());

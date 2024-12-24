@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { useEffect, useState } from "react";
+import SelectAllTransferList from "./SelectAllTransferList";
 
 ChartJS.register(
   CategoryScale,
@@ -40,6 +41,10 @@ const DeadliestAttackTypes = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log({ attackData });
+  }, [attackData]);
+
   const chartData = {
     labels: selectedTypes.map((item) => item._id), // סוגי התקפות
     datasets: [
@@ -65,7 +70,12 @@ const DeadliestAttackTypes = () => {
   return (
     <div className="deadliestAttackTypes">
       <div className="selectTypes">
-        {attackData.map((type) => (
+        <SelectAllTransferList
+          leftItems={attackData}
+          selectedTypes={selectedTypes}
+          setSelectedTypes={setSelectedTypes}
+        />{" "}
+        {/* {attackData.map((type) => (
           <div key={type._id}>
             <input
               type="checkbox"
@@ -81,12 +91,12 @@ const DeadliestAttackTypes = () => {
             />
             <label htmlFor={type._id}>{type._id}</label>
           </div>
-        ))}
+        ))} */}
       </div>
 
       <div className="graf">
         <h1>גרף סוגי התקפות</h1>
-        <Bar options={options} data={chartData} className="bar"/>
+        <Bar options={options} data={chartData} className="bar" />
       </div>
     </div>
   );
