@@ -157,7 +157,6 @@ export default function SelectAllTransferList({
   selectedTypes,
   setSelectedTypes,
 }: SelectAllTransferListProps) {
-  const leftChecked = intersection(selectedTypes, leftItems);
 
   const handleToggle = (type: any) => () => {
     const currentIndex = selectedTypes.findIndex((t) => t._id === type._id);
