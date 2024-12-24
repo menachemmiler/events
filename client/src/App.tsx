@@ -6,6 +6,7 @@ import HighestCasualtyRegions from "./components/HighestCasualtyRegions";
 import NewAttack from "./components/NewAttack";
 import { useEffect } from "react";
 import { socket } from "./socket/io";
+import GroupsByYear from "./components/GroupsByYear";
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,7 @@ function App() {
           path="highest-casualty-regions"
           element={<HighestCasualtyRegions />}
         />
+        <Route path="groups-by-year" element={<GroupsByYear />} />
         <Route path="incident-trends" element={<IncidentTrends />} />
       </Routes>
     </>

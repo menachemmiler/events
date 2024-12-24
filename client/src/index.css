@@ -13,27 +13,14 @@
   width: 100%;
   height: 100%;
   display: flex;
-  /* background-color: aqua; */
   justify-content: center;
 }
 
-/* .menu > .gif {
-  position: absolute;
-  top: 2%;
-  left: 2%;
-  width: 60px;
-  height: 60px;
-  background-color: red;
-  border-radius: 50%;
-  z-index: 1;
-  padding: 1px;
-  
-} */
 
-.menu{
-  .gif{
-    position:absolute;
-    margin:20px;
+.menu {
+  .gif {
+    position: absolute;
+    margin: 20px;
     height: 60px;
     width: 160px;
     max-width: 50%;
@@ -41,46 +28,46 @@
     top: 1%;
     left: 2%;
   }
-  
-  .gif{
-    color:white;
-    font-family:Helvetica, sans-serif;
-    font-weight:bold;
-    font-size:100%;
+
+  .gif {
+    color: white;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 100%;
     text-align: center;
-    text-decoration:none;
-    background-color:rgb(227, 80, 80);
-    display:block;
-    padding:2px 4px;
-    
+    text-decoration: none;
+    background-color: rgb(227, 80, 80);
+    display: block;
+    padding: 2px 4px;
+
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     text-shadow: 0px 1px 0px #000;
     filter: dropshadow(color=#000, offx=0px, offy=1px);
-    
-    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
-    -moz-box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
-    box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
-    
+
+    -webkit-box-shadow: inset 0 1px 0 #ffe5c4, 0 10px 0 #915100;
+    -moz-box-shadow: inset 0 1px 0 #ffe5c4, 0 10px 0 #915100;
+    box-shadow: inset 0 1px 0 #ffe5c4, 0 10px 0 #915100;
+
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
   }
-  
-  .gif:active{
-    top:10px;
-    background-color:red;
 
-    -webkit-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 black;
-    -moz-box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3pxpx 0 black;
-    box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 black;
+  .gif:active {
+    top: 10px;
+    background-color: red;
+
+    -webkit-box-shadow: inset 0 1px 0 #ffe5c4, inset 0 -3px 0 black;
+    -moz-box-shadow: inset 0 1px 0 #ffe5c4, inset 0 -3pxpx 0 black;
+    box-shadow: inset 0 1px 0 #ffe5c4, inset 0 -3px 0 black;
   }
-  
-  .gif:after{
-    content:"";
-    padding:4px;
+
+  .gif:after {
+    content: "";
+    padding: 4px;
     position: absolute;
-    bottom:-15px;
-    left:-4px;
+    bottom: -15px;
+    left: -4px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -97,10 +84,16 @@
   gap: 2%;
   justify-content: center;
   direction: rtl;
+  overflow-y: auto;
+}
+
+.menu > .center::-webkit-scrollbar {
+  display: none;
 }
 
 .menu > .center > div {
   width: 300px;
+  min-width: 200px;
   height: 250px;
 }
 
@@ -227,39 +220,41 @@
   height: 15%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2%;
-  background-color: blue;
-
-  input {
-    width: 20%;
-    height: 40%;
-    border-radius: 10px;
-    border: none;
-    color: gray;
-    font-size: 1.2rem;
-    font-weight: 600;
-    direction: rtl;
-  }
-  button {
-    width: 20%;
-    height: 40%;
-    border-radius: 10px;
-    border: none;
-    color: gray;
-    font-size: 1.2rem;
-    font-weight: 600;
-    direction: rtl;
-  }
-
-  button {
-    color: black;
-    background-color: gray;
-  }
+  justify-content: space-evenly;
+  background-color: #aad3df;
+  border-bottom: 1px solid black;
 }
 
+.highestCasualtyRegions > .filter > * {
+  width: 15%;
+  height: 40%;
+  border-radius: 10px;
+  border: none;
+  color: #f2efe9;
+  font-size: 1.2rem;
+  font-weight: 600;
+  direction: rtl;
+  color: #29b7e2;
+  text-align: center;
+}
 
-.newAttack{
+.highestCasualtyRegions > .popup {
+  background-color: #29b7e2;
+  width: 100%;
+  height: 100%;
+  color: red;
+}
+
+.groupsByYear{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.newAttack {
   height: 100%;
   width: 100%;
   display: flex;
@@ -268,7 +263,7 @@
   align-items: center;
 }
 
-.newAttack > .center{
+.newAttack > .center {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -276,10 +271,10 @@
   align-items: center;
   gap: 5px;
   width: 50%;
-  height: 49%;  
+  height: 49%;
 }
 
-.newAttack > .center > *{
+.newAttack > .center > * {
   height: 10%;
   margin: auto;
   padding: auto;

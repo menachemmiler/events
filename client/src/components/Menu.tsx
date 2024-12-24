@@ -25,12 +25,12 @@ const Menu = () => {
           text="מגמות אירועים"
           title="נִתוּחַ"
         />
-        {/* <ActionAreaCard
-          imgName="attackType.png"
-          linkTo="deadliest-attack-types"
-          text="סוגי ההתקפה הקטלניים ביותר"
-          title="נִתוּחַ"
-        /> */}
+        <ActionAreaCard
+          imgName="GroupsByYear.png"
+          linkTo="groups-by-year"
+          text="ארגונים שפעלו בשנה מסוימת עם סך התקריות"
+          title="יחסים"
+        />
         {/* <ActionAreaCard
           imgName="attackType.png"
           linkTo="deadliest-attack-types"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { popupContent, popupHead, popupText } from "../utils/popupStyles";
 
 // פונקציה לעדכון מיקום המפה והזום
 const UpdateMapView = ({
@@ -57,8 +58,6 @@ const HighestCasualtyRegions = () => {
     }
   };
 
-
-
   useEffect(() => {
     console.log({ attackData });
   }, [attackData]);
@@ -112,6 +111,7 @@ const HighestCasualtyRegions = () => {
     <div className="highestCasualtyRegions">
       <div className="filter">
         <input
+          style={{ textEmphasisColor: "red" }}
           type="text"
           placeholder="חיפוש לפי עיר"
           value={city}
@@ -169,8 +169,12 @@ const HighestCasualtyRegions = () => {
           {positions.map((region, index) => (
             <Marker key={index} position={region.position as [number, number]}>
               <Popup>
-                <div>{region.name} </div>
-                רמת סיכון{region.avg}
+                <div style={popupContent as React.CSSProperties}>
+                  <div style={popupHead as React.CSSProperties}>
+                    {region.name}
+                  </div>
+                  <div style={popupText as React.CSSProperties}>רמת סיכון{region.avg}</div>
+                </div>
               </Popup>
             </Marker>
           ))}
