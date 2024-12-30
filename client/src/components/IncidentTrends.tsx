@@ -201,7 +201,7 @@ const IncidentTrends = () => {
     try {
       if (!year && !month && !fromTo) return;
       const response = await fetch(
-        `https://events-v85n.onrender.com/api/analysis/incident-trends${
+        `${import.meta.env.VITE_BASE_URL}/api/analysis/incident-trends${
           year
             ? month
               ? `?year=${year}&month=${month}`

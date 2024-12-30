@@ -41,7 +41,7 @@ const HighestCasualtyRegions = () => {
   ) => {
     try {
       const response = await fetch(
-        `https://events-v85n.onrender.com/api/analysis/highest-casualty-regions${
+        `${import.meta.env.VITE_BASE_URL}/api/analysis/highest-casualty-regions${
           region
             ? `?region=${region}`
             : country

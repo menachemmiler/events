@@ -27,7 +27,7 @@ const DeadliestAttackTypes = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://events-v85n.onrender.com/api/analysis/deadliest-attack-types"
+        `${import.meta.env.VITE_BASE_URL}/api/analysis/deadliest-attack-types`
       );
       const data = await response.json();
       setAttackData(data.data);

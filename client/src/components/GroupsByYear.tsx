@@ -30,7 +30,7 @@ const GroupsByYear = () => {
         return;
       }
       const response = await fetch(
-        `https://events-v85n.onrender.com/api/relationships/groups-by-year${
+        `${import.meta.env.VITE_BASE_URL}/api/relationships/groups-by-year${
           year ? `?year=${year}` : group ? `?gname=${group}` : ""
         }`
       );
@@ -46,7 +46,7 @@ const GroupsByYear = () => {
     const fetchYears = async () => {
       try {
         const res = await fetch(
-          "https://events-v85n.onrender.com/api/relationships/groups-by-year"
+          `${import.meta.env.VITE_BASE_URL}/api/relationships/groups-by-year`
         );
         const data = await res.json();
         setAllYears(data.data.allYears);
