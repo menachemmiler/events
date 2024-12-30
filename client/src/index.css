@@ -252,6 +252,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #52c1e3;
 }
 
 .groupsByYear > .filter{
@@ -260,9 +261,13 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  background-color: #aad3df;
-  border-bottom: 1px solid black;
+  background: linear-gradient(to bottom, #e6cc96, #52c1e3); 
 }
+
+.groupsByYear > .filter > div{
+  width: 20%;
+}
+
 
 .groupsByYear > .graf{
   width: 100%;

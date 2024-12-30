@@ -3,6 +3,7 @@ import attackTypeImg from "../assets/attackType.png"
 import DeadliestAttackTypesImg from "../assets/DeadliestAttackTypes.png"
 import IncidentTrendsImg from "../assets/IncidentTrends.png"
 import GroupsByYearImg from "../assets/GroupsByYear.png"
+// import SearchInput from "./SearchInput";
 
 
 const Menu = () => {
@@ -11,6 +12,7 @@ const Menu = () => {
       <button className="gif" onClick={() => (window.location.href = "/newAttack")}>
         עדכן אירוע חדש
       </button>
+      {/* <SearchInput/> */}
       <div className="center">
         <ActionAreaCard
           imgName={attackTypeImg}

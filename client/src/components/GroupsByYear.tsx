@@ -1,20 +1,17 @@
-
-
-import { Button,  MenuItem, Select } from "@mui/material";
+import {
+  Autocomplete,
+  Button,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 const GroupsByYear = () => {
-  const [year, setYear] = useState(0);
+  const [year, setYear] = useState("");
   const [group, setGroup] = useState("");
-  const [attackData, setAttackData] = useState<any[]>([
-    {
-      _id: {
-        gname: "Unknown",
-      },
-      count: 113,
-    },
-  ]);
+  const [attackData, setAttackData] = useState<any[]>([]);
   const [allYears, setAllYears] = useState([]);
   const [allGroups, setAllGroups] = useState([]);
 
@@ -22,7 +19,7 @@ const GroupsByYear = () => {
     year,
     group,
   }: {
-    year?: number;
+    year?: string;
     group?: string;
   }) => {
     try {
@@ -54,16 +51,14 @@ const GroupsByYear = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }
+    };
     fetchYears();
   }, []);
 
   useEffect(() => {
-    //get all years and gnams from db
     console.log({ allGroups });
     console.log({ allYears });
-    console.log({ attackData });
-  }, [allGroups, allYears, attackData]);
+  }, [allGroups, allYears]);
 
   const chartData = {
     labels: attackData.map((item) =>
@@ -75,8 +70,8 @@ const GroupsByYear = () => {
           group ? "שנות פעילות הארגון" : year ? `כל הארגונים בשנה ${year}` : ""
         }`,
         data: attackData.map((item) => item.count),
-        backgroundColor: `rgba(255, 99, 132, 0.5)`,
-        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: `#e6cc96`,
+        borderColor: "#52c1e3",
         // borderWidth: 1,
       },
     ],
@@ -85,43 +80,46 @@ const GroupsByYear = () => {
   return (
     <div className="groupsByYear">
       <div className="filter">
-        {/* אפשרויות סינון:
-i. בחירת שנה - הצגת הארגונים לפי מספר התקריות המשויכות לה בסדר יורד ממספר
-התקריות הכי גדול להכי קטן
-ii. בחירת ארגון מרשימה - הצגת התקריות לפני שנים */}
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={Number(year)}
-          label="cdwdwdwddw"
-          onChange={(e) => setYear(Number(e.target.value))}
-        >
-          {allYears.map((year: { _id: number }) => (
-            <MenuItem key={year._id} value={year._id}>
-              {year._id}
-            </MenuItem>
-          ))}
-        </Select>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={group}
-          label="cdwdwdwddw"
-          onChange={(e) => setGroup(e.target.value)}
-        >
-          {allGroups.map((group: { _id: string }) => (
-            <MenuItem key={group._id} value={group._id}>
-              {group._id}
-            </MenuItem>
-          ))}
-        </Select>
-    
-        <Button onClick={() => fetchData({ year })}>year 🔍</Button>
-        <Button onClick={() => fetchData({ group })}>by gname 🌎</Button>
+        <Autocomplete
+          options={allYears}
+          getOptionLabel={(option: { _id: string }) => option._id.toString()}
+          onChange={(event, newValue) => {
+            setYear(newValue?._id || "");
+            fetchData({ year: newValue?._id });
+            setGroup("");
+          }}
+          renderInput={(params) => (
+            <TextField 
+              {...params}
+              label="בחר לפי שנה"
+              variant="standard"
+            />
+            
+          )}
+        />
+
+
+
+        <Autocomplete
+          options={allGroups}
+          getOptionLabel={(option: { _id: string }) => option._id.toString()}
+          onChange={(event, newValue) => {
+            setGroup(newValue?._id || "");
+            fetchData({ group: newValue?._id });
+            setYear("");
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="בחר לפי ארגון"
+              variant="standard"
+            />
+          )}
+        />
       </div>
       <div className="graf">
-        <h1>Line Chart</h1>
-        <Line data={chartData} className="line" />
+        <h1>הצג לפי שנה או ארגון</h1>
+        <Line  data={chartData} className="line" />
       </div>
     </div>
   );
