@@ -1,8 +1,5 @@
 import {
   Autocomplete,
-  Button,
-  MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -83,7 +80,7 @@ const GroupsByYear = () => {
         <Autocomplete
           options={allYears}
           getOptionLabel={(option: { _id: string }) => option._id.toString()}
-          onChange={(event, newValue) => {
+          onChange={(_event, newValue) => {
             setYear(newValue?._id || "");
             fetchData({ year: newValue?._id });
             setGroup("");
@@ -103,7 +100,7 @@ const GroupsByYear = () => {
         <Autocomplete
           options={allGroups}
           getOptionLabel={(option: { _id: string }) => option._id.toString()}
-          onChange={(event, newValue) => {
+          onChange={(_event, newValue) => {
             setGroup(newValue?._id || "");
             fetchData({ group: newValue?._id });
             setYear("");
