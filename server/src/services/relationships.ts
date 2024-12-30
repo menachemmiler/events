@@ -92,6 +92,7 @@ export const groupByYearService = async (quary: {
   }
 };
 
+
 export const deadliestRegionsService = async (quary: {
   gname: string;
 }): Promise<responseDTO> => {
