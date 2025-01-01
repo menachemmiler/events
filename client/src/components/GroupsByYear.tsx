@@ -64,7 +64,7 @@ const GroupsByYear = () => {
     datasets: [
       {
         label: `${
-          group ? "שנות פעילות הארגון" : year ? `כל הארגונים בשנה ${year}` : ""
+          group ? `${group} שנות פעילות הארגון` : year ? `כל הארגונים בשנה ${year}` : ""
         }`,
         data: attackData.map((item) => item.count),
         backgroundColor: `#e6cc96`,

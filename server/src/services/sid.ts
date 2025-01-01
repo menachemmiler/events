@@ -7,6 +7,7 @@ export const initDatabase = async () => {
     const insertAll = await event.insertMany(mylist);
     //to delete evry attack that heve the attacktype Unknown
     await event.deleteMany({ attacktype1_txt: "Unknown" });
+    await event.deleteMany({ gname: "Unknown" });
     const allCountryLoactions = require("../../data/countrysLocation.json");
     const allRegionLoactions = require("../../data/regionLocation.json");
     const insertAllLocation = await country.insertMany(allCountryLoactions);

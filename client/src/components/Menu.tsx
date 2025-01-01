@@ -29,7 +29,7 @@ const Menu = () => {
         <ActionAreaCard
           imgName={IncidentTrendsImg}
           linkTo="incident-trends"
-          text="מגמות אירועים"
+          text="מגמות אירועים לפי תאריכים"
           title="נִתוּחַ"
         />
         <ActionAreaCard
