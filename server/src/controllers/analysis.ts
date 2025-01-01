@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deadliestAttackTypes, highestCasualtyRegions, incidentTrends } from "../routes/analysis";
+import { allRegeion, deadliestAttackTypes, highestCasualtyRegions, incidentTrends } from "../routes/analysis";
 
 const router = Router();
 
@@ -11,6 +11,9 @@ router.get("/highest-casualty-regions", highestCasualtyRegions)
 
 //.3 מגמות שנתיות וחודשיות בתדירות התקריות
 router.get("/incident-trends", incidentTrends)
+
+//.מביא את רשימת כל האיזורים והנקודות שלהם
+router.get("/all-regions", allRegeion)
 
 
 export default router;
