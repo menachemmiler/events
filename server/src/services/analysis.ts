@@ -289,3 +289,20 @@ export const incidentTrendsService = async (quary: {
     };
   }
 };
+
+export const allRegeionService = async (): Promise<responseDTO> => {
+  try {
+    const allRegion = await region.find();
+    if (!allRegion) throw new Error("can't get all regeions");
+    return {
+      description: "רשימת כל האיזורים והנקודות שלהם",
+      data: allRegion,
+    };
+  } catch (err: any) {
+    console.log("Error in incidentTrendsService: ", err.message);
+    return {
+      description: "לא מצליח  לקבל את רשימת האזורים",
+      data: `Erorr: ${err.message}`,
+    };
+  }
+};

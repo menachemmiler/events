@@ -7,6 +7,7 @@ import NewAttack from "./components/NewAttack";
 import { useEffect } from "react";
 import { socket } from "./socket/io";
 import GroupsByYear from "./components/GroupsByYear";
+import AllRegions from "./components/allRegions";
 
 function App() {
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
         />
         <Route path="groups-by-year" element={<GroupsByYear />} />
         <Route path="incident-trends" element={<IncidentTrends />} />
+        <Route path="all-regions" element={<AllRegions/>}/>
       </Routes>
     </>
   );

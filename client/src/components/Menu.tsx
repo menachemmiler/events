@@ -3,7 +3,7 @@ import attackTypeImg from "../assets/attackType.png"
 import DeadliestAttackTypesImg from "../assets/DeadliestAttackTypes.png"
 import IncidentTrendsImg from "../assets/IncidentTrends.png"
 import GroupsByYearImg from "../assets/GroupsByYear.png"
-// import SearchInput from "./SearchInput";
+import AllRegions from "../assets/AllRegions.png"
 
 
 const Menu = () => {
@@ -29,7 +29,7 @@ const Menu = () => {
         <ActionAreaCard
           imgName={IncidentTrendsImg}
           linkTo="incident-trends"
-          text="מגמות אירועים"
+          text="מגמות אירועים לפי תאריכים"
           title="נִתוּחַ"
         />
         <ActionAreaCard
@@ -38,12 +38,12 @@ const Menu = () => {
           text="ארגונים שפעלו בשנה מסוימת עם סך התקריות"
           title="יחסים"
         />
-        {/* <ActionAreaCard
-          imgName="attackType.png"
-          linkTo="deadliest-attack-types"
-          text="סוגי ההתקפה הקטלניים ביותר"
-          title="נִתוּחַ"
-        /> */}
+        <ActionAreaCard
+          imgName={AllRegions}
+          linkTo="all-regions"
+          text="ארגונים בולטים לכל איזור"
+          title="יחסים"
+        />
         {/* <ActionAreaCard
           imgName="attackType.png"
           linkTo="deadliest-attack-types"
