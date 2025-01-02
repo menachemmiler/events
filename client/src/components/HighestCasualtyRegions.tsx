@@ -193,7 +193,7 @@
 // export default HighestCasualtyRegions;
 
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import MyMap from "./MyMap";
 import { Position } from "../DTO/position";
 
@@ -211,6 +211,7 @@ const HighestCasualtyRegions = () => {
   const [filters, setFilters] = useState({ region: "", country: "", city: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
 
   const fetchAttackData = async (region = "", country = "", city = "") => {
     const query = region
@@ -247,13 +248,7 @@ const HighestCasualtyRegions = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [filters]);
 
-  useEffect(() => {
-    fetchData();
-  }, [filters]);
 
   const positions = attackData.map((region) => ({
     position: [region.coordinates.latitude, region.coordinates.longitude],
@@ -281,6 +276,8 @@ const HighestCasualtyRegions = () => {
           onChange={(e) =>
             setFilters({ ...filters, city: e.target.value, country: "", region: "" })
           }
+          // onBlur={fetchData}
+          onKeyDown={(e) => {e.key == "Enter" && fetchData()}}
         />
         <input
           type="text"
@@ -289,6 +286,8 @@ const HighestCasualtyRegions = () => {
           onChange={(e) =>
             setFilters({ ...filters, country: e.target.value, city: "", region: "" })
           }
+          // onBlur={fetchData}
+          onKeyDown={(e) => {e.key == "Enter" && fetchData()}}
         />
         <input
           type="text"
@@ -297,8 +296,10 @@ const HighestCasualtyRegions = () => {
           onChange={(e) =>
             setFilters({ ...filters, region: e.target.value, city: "", country: "" })
           }
+          // onBlur={fetchData}
+          onKeyDown={(e) => {e.key == "Enter" && fetchData()}}
         />
-        <button onClick={() => setFilters({ region: "", country: "", city: "" })}>
+        <button onClick={() => {setFilters({ region: "", country: "", city: "" }), fetchData()}}>
           חפש לפי כל האזורים
         </button>
       </div>
