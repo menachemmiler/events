@@ -102,26 +102,34 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* background-color: gray; */
 }
 
-.deadliestAttackTypes > .graf {
-  height: 100%;
+.deadliestAttackTypes > .selectTypes{
+  height: 20%;
   width: 100%;
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.deadliestAttackTypes > .graf {
+  height: 76%;
+  width: 100%;
+  /* background-color: #915100; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.graf > .bar {
+.graf > .bar, .line {
   max-height: 90%;
 }
 
-.deadliestAttackTypes > .selectTypes {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
+
 
 .highestCasualtyRegions {
   width: 100%;
@@ -306,7 +314,16 @@
 
 .allRegions > .main > .left, .right{
   width: 45%;
-  height: 90%;
+  height: 80%;
+  position: absolute;
+  bottom: 2%;
+  box-shadow: 0 3px 5px #368bcd;
+}
+
+.allRegions > .main > .right{
+  width: 45%;
+  position: absolute;
+  right: 2%;
 }
 
 
@@ -314,7 +331,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  left: 2%;
 }
+
+.allRegions > .main > .left > *{
+  position: absolute;
+}
+
+.allRegions > .main > .left > .changeGraf{
+  top: 1%;
+  left: 1%;
+}
+
+.allRegions > .main > .left > .changeSize{
+  bottom: 1%;
+  right: 1%;
+}
+
+
+/* .allRegions > .main > .right > .changeSize{
+  position: absolute;
+  bottom: 10%;
+  right: 1%;
+} */
+
+.hidden{
+  display: none;
+}
+
 
 
 .filter > div{

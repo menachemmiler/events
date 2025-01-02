@@ -1,8 +1,10 @@
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
 import { Position } from "../DTO/position";
 import MyMap from "./MyMap";
 import { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
+import grafImg from "../assets/graf.png";
+import lineGrafImg from "../assets/lineGraf.png";
 
 const AllRegions = () => {
   const [allRegions, setAllRegions] = useState<
@@ -32,8 +34,20 @@ const AllRegions = () => {
       count: number;
     }[]
   >([]);
-
   const [top, setTop] = useState<boolean>(false);
+  const [displayBaf, setBar] = useState<"block" | "none">("block");
+  const [displayLine, setLine] = useState<"block" | "none">("none");
+  const [grafSize, setGrafSize] = useState<boolean>(false);
+
+  const setDisplayGraf = () => {
+    if (displayBaf == "block") {
+      setBar("none");
+      setLine("block");
+    } else {
+      setBar("block");
+      setLine("none");
+    }
+  };
 
   const getAllRegons = async () => {
     try {
@@ -125,16 +139,14 @@ const AllRegions = () => {
   }
 
   let chartData = {
-    labels: attackData.map((item) =>
-     item._id
-    ),
+    labels: attackData.map((item) => item._id),
     datasets: [
       {
-        label:  top
-        ? `חמשת הבולטים ${currRegeion?.region_txt}`
-        : `כל הארגונים ב-${currRegeion?.region_txt}`,
+        label: top
+          ? `חמשת הבולטים ${currRegeion?.region_txt}`
+          : `כל הארגונים ב-${currRegeion?.region_txt}`,
         data: attackData.map((item) => item.count),
-        backgroundColor: `#e6cc96`,
+        backgroundColor:  `#e6cc96`,
         borderColor: "#52c1e3",
         // borderWidth: 1,
       },
@@ -163,10 +175,72 @@ const AllRegions = () => {
         </Button>
       </div>
       <div className="main">
-        <div className="left">
-        <Line  data={chartData} className="line"/>
+        <div
+          className={`left`}
+          style={grafSize ? { width: "96%" } : { zIndex: 0 }}
+        >
+          <Line
+            style={{ display: `${displayLine}` }}
+            data={chartData}
+            className="line"
+          />
+          <Bar
+            style={{ display: `${displayBaf}` }}
+            data={chartData}
+            className="bar"
+          />
+          <IconButton
+            aria-label="delete"
+            size="large"
+            className="changeGraf"
+            onClick={setDisplayGraf}
+          >
+            <img
+              src={displayBaf == "none" ? grafImg : lineGrafImg}
+              title={displayBaf == "none" ? "הצג ב-עמודות גרף" :  "הצג ב-תרשים גרף"}
+              alt="graf img"
+              width={"15px"}
+            />
+          </IconButton>
+          <Button
+            variant="outlined"
+            className="changeSize"
+            onClick={() => {
+              setGrafSize(!grafSize);
+            }}
+          >
+            {grafSize ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-arrows-move"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16px"
+                height="16px"
+                fill="currentColor"
+                className="bi bi-arrows-fullscreen"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"
+                />
+              </svg>
+            )}
+          </Button>
         </div>
-        <div className="right">
+        <div className={`right ${grafSize ? "hidden" : ""}`}>
           <MyMap
             centerPosition={centerPosition}
             initialZoom={4}
