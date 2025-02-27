@@ -229,8 +229,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  background-color: #aad3df;
-  border-bottom: 1px solid black;
+  background: linear-gradient(to bottom, #e6cc96, #52c1e3); 
 }
 
 .highestCasualtyRegions > .filter > * {
